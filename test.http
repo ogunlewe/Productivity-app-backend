@@ -1,0 +1,18 @@
+POST http://localhost:5000/api/projects
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ODZlYWQ4N2ViZmRmMmI2YWYyM2YyZCIsImlhdCI6MTc1MzY3MjU0NywiZXhwIjoxNzU2MjY0NTQ3fQ.viuXz4mJEWZoChnd7txW6rc1GsR2FcMMn018Q3j2cRM
+Content-Type: application/json
+
+{
+  "title": "Challenge Tracker App",
+  "description": "An app to track coding challenges",
+  "challenge": "2",
+  "techStack": ["Node.js", "MongoDB", "Express"],
+  "repoLink": "https://github.com/devbro/challenge-tracker",
+  "screenshots": []
+}
+
+
+
+
+
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ODZlYWQ4N2ViZmRmMmI2YWYyM2YyZCIsImlhdCI6MTc1MzY3MjU0NywiZXhwIjoxNzU2MjY0NTQ3fQ.viuXz4mJEWZoChnd7txW6rc1GsR2FcMMn018Q3j2cRM
