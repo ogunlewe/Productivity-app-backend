@@ -1,91 +1,58 @@
-# Productivity & Challenge Tracker API 🚀
-
-[![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)](https://nodejs.org/)
-[![Express.js](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com/)
-[![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
-[![Mongoose](https://img.shields.io/badge/Mongoose-800000?style=for-the-badge&logo=mongoose&logoColor=white)](https://mongoosejs.com/)
-[![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](https://opensource.org/licenses/ISC)
+# Productivity Hub API 🚀
 
 ## Overview
-A robust backend API built with Express.js and MongoDB (via Mongoose) designed to empower users to track challenges, manage projects, and log daily check-ins. It features a secure authentication system with JWT.
+The Productivity Hub API is a robust backend solution built with Node.js and Express.js, leveraging MongoDB with Mongoose for data persistence. It serves as the core for a productivity application, enabling users to manage challenges, track daily check-ins, and organize their projects.
 
 ## Features
--   **Node.js**: Asynchronous event-driven JavaScript runtime.
--   **Express.js**: Fast, unopinionated, minimalist web framework for Node.js.
--   **MongoDB**: NoSQL database for flexible data storage.
--   **Mongoose**: MongoDB object data modeling (ODM) for Node.js.
--   **JSON Web Tokens (JWT)**: Secure authentication and authorization.
--   **Bcrypt.js**: Password hashing for security.
--   **CORS**: Cross-Origin Resource Sharing enabled for frontend integration.
--   **Morgan**: HTTP request logger for development.
+*   **User Authentication & Authorization**: Secure user registration and login with JWTs, protected routes for authenticated access.
+*   **Challenge Management**: Create, view, and join coding or productivity challenges.
+*   **Daily Check-ins**: Track progress within challenges via daily check-ins, including content, mood, and associated projects.
+*   **Project Portfolio**: Manage personal projects, link them to specific challenges, and update project details.
+*   **Data Persistence**: Efficiently store and retrieve data using MongoDB, orchestrated by Mongoose ORM.
+*   **RESTful API Design**: Clear and consistent API endpoints for seamless client-side integration.
 
 ## Getting Started
-Follow these steps to set up the project locally.
+To get this backend server up and running on your local machine, follow these steps.
 
 ### Installation
-To get started with the Productivity & Challenge Tracker API, clone the repository and install its dependencies:
-
-```bash
-# ⬇️ Clone the repository
-git clone <repository-url>
-
-# 📂 Navigate into the project directory
-cd "project 1" # Assuming "project 1" is the folder name after cloning
-
-# 📦 Install dependencies using pnpm (as specified in package.json)
-pnpm install
-```
+1.  **Clone the Repository**:
+    ```bash
+    git clone https://github.com/ogunlewe/productivity-app-backend.git
+    cd productivity-app-backend
+    ```
+2.  **Install Dependencies**:
+    The project uses `pnpm` as its package manager. Ensure you have it installed. If not, you can install it via npm: `npm install -g pnpm`.
+    Then, install the project dependencies:
+    ```bash
+    pnpm install
+    ```
 
 ### Environment Variables
-Create a `.env` file in the root directory of the project and add the following environment variables:
+Create a `.env` file in the root directory of the project and populate it with the following environment variables:
 
 ```
 PORT=5000
-MONGO_URI=mongodb+srv://your_username:your_password@your_cluster.mongodb.net/your_database_name?retryWrites=true&w=majority
-JWT_SECRET=your_jwt_secret_key_here
+MONGO_URI=mongodb+srv://<username>:<password>@cluster0.abcde.mongodb.net/productivity_db?retryWrites=true&w=majority
+JWT_SECRET=your_super_secret_jwt_key
 ```
-**Examples:**
-*   `PORT=5000`: The port on which the server will run.
-*   `MONGO_URI=mongodb+srv://admin:password123@cluster0.abcde.mongodb.net/productivity_db?retryWrites=true&w=majority`: Your MongoDB connection string. Replace `your_username`, `your_password`, `your_cluster`, and `your_database_name` with your actual MongoDB Atlas (or local MongoDB) details.
-*   `JWT_SECRET=supersecretkey123`: A strong, random string used to sign and verify JWTs. Generate a complex one for production.
 
-### Running the Server
-Once the dependencies are installed and environment variables are set, you can start the server:
-
-```bash
-# ▶️ Start the server in development mode (with nodemon for auto-restarts)
-pnpm run dev
-
-# 🚀 Or start the server in production mode
-pnpm start
-```
-The server will typically run on `http://localhost:5000` (or the `PORT` you configured).
-
-## Usage
-This API powers the backend for a productivity and challenge tracking application. It can be integrated with any frontend application that requires user authentication, challenge creation and participation, project management, and daily check-ins.
-
-**Example Flow:**
-1.  **Register a User**: Send a `POST` request to `/api/auth/signup` with `username`, `email`, and `password`.
-2.  **Login User**: Send a `POST` request to `/api/auth/login` with `email` and `password` to receive a JWT.
-3.  **Access Protected Endpoints**: Include the received JWT in the `Authorization: Bearer <token>` header for all authenticated requests (e.g., creating a challenge, logging a check-in).
-4.  **Create a Challenge**: A logged-in user can create new challenges.
-5.  **Join Challenges**: Users can participate in existing challenges.
-6.  **Log Daily Check-ins**: Users can log their progress and mood daily for challenges or projects.
-7.  **Manage Projects**: Users can create and manage projects associated with challenges.
+**Required Variables**:
+*   `PORT`: The port number on which the server will run. (e.g., `5000`)
+*   `MONGO_URI`: Your MongoDB connection URI. (e.g., `mongodb+srv://user:pass@cluster.mongodb.net/mydb?retryWrites=true&w=majority`)
+*   `JWT_SECRET`: A strong, secret key used for signing JWTs. This should be a long, random string.
 
 ## API Documentation
-
 ### Base URL
-The base URL for all API endpoints is `http://localhost:5000/api` (or your configured host and port).
+`http://localhost:5000/api` (when running locally on port 5000)
 
 ### Endpoints
 
-#### `POST /api/auth/signup`
-**Description**: Registers a new user account.
+#### POST /api/auth/signup
+Registers a new user.
 **Request**:
 ```json
 {
-  "username": "jane.doe",
+  "username": "jane_doe",
   "email": "jane.doe@example.com",
   "password": "StrongPassword123"
 }
@@ -93,18 +60,18 @@ The base URL for all API endpoints is `http://localhost:5000/api` (or your confi
 **Response**:
 ```json
 {
-  "_id": "60d0fe4f3b7b2b0015b8d2c0",
-  "username": "jane.doe",
+  "_id": "60d0fe4f7e5f3c0015b0b1c0",
+  "username": "jane_doe",
   "email": "jane.doe@example.com",
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
 }
 ```
 **Errors**:
--   `400 Bad Request`: `{"message": "All fields are required."}`
--   `400 Bad Request`: `{"message": "User already exists."}`
+- `400 Bad Request`: `{ "message": "All fields are required." }`
+- `400 Bad Request`: `{ "message": "User already exists." }`
 
-#### `POST /api/auth/login`
-**Description**: Authenticates a user and returns a JWT.
+#### POST /api/auth/login
+Authenticates a user and returns a JWT.
 **Request**:
 ```json
 {
@@ -115,116 +82,121 @@ The base URL for all API endpoints is `http://localhost:5000/api` (or your confi
 **Response**:
 ```json
 {
-  "_id": "60d0fe4f3b7b2b0015b8d2c0",
-  "username": "jane.doe",
+  "_id": "60d0fe4f7e5f3c0015b0b1c0",
+  "username": "jane_doe",
   "email": "jane.doe@example.com",
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
 }
 ```
 **Errors**:
--   `401 Unauthorized`: `{"message": "Invalid credentials."}`
+- `401 Unauthorized`: `{ "message": "Invalid credentials." }`
 
-#### `GET /api/auth/me`
-**Description**: Retrieves the profile of the authenticated user.
-**Authorization**: Bearer Token required.
-**Request**: No body.
+#### GET /api/auth/me
+Retrieves the profile of the authenticated user.
+**Request**:
+Requires a valid JWT in the `Authorization` header: `Bearer YOUR_TOKEN`
 **Response**:
 ```json
 {
-  "_id": "60d0fe4f3b7b2b0015b8d2c0",
-  "username": "jane.doe",
+  "_id": "60d0fe4f7e5f3c0015b0b1c0",
+  "username": "jane_doe",
   "email": "jane.doe@example.com",
   "avatar": "http://example.com/avatar.png",
-  "bio": "Passionate developer.",
+  "bio": "A passionate developer.",
   "createdAt": "2023-10-26T10:00:00.000Z",
   "updatedAt": "2023-10-26T10:00:00.000Z"
 }
 ```
 **Errors**:
--   `401 Unauthorized`: `{"message": "No token, authorization denied"}`
--   `401 Unauthorized`: `{"message": "Not authorized"}`
+- `401 Unauthorized`: `{ "message": "Not authorized" }`
+- `401 Unauthorized`: `{ "message": "No token, authorization denied" }`
 
-#### `POST /api/challenges`
-**Description**: Creates a new challenge.
-**Authorization**: Bearer Token required.
+#### POST /api/challenges
+Creates a new challenge. (Protected route)
 **Request**:
+Requires a valid JWT in the `Authorization` header.
 ```json
 {
   "title": "30 Days of Code",
-  "description": "Commit to coding daily for 30 days.",
+  "description": "Challenge to code every day for 30 days.",
   "duration": 30,
-  "tags": ["coding", "productivity", "challenge"]
+  "tags": ["coding", "daily", "consistency"]
 }
 ```
 **Response**:
 ```json
 {
-  "_id": "60d0fe4f3b7b2b0015b8d2c1",
+  "_id": "60d0fe4f7e5f3c0015b0b1c1",
   "title": "30 Days of Code",
-  "description": "Commit to coding daily for 30 days.",
+  "description": "Challenge to code every day for 30 days.",
   "duration": 30,
-  "startDate": "2023-10-26T10:00:00.000Z",
-  "creator": "60d0fe4f3b7b2b0015b8d2c0",
-  "participants": ["60d0fe4f3b7b2b0015b8d2c0"],
-  "tags": ["coding", "productivity", "challenge"],
+  "startDate": "2023-10-26T00:00:00.000Z",
+  "creator": "60d0fe4f7e5f3c0015b0b1c0",
+  "participants": ["60d0fe4f7e5f3c0015b0b1c0"],
+  "tags": ["coding", "daily", "consistency"],
   "createdAt": "2023-10-26T10:00:00.000Z",
   "updatedAt": "2023-10-26T10:00:00.000Z"
 }
 ```
 **Errors**:
--   `400 Bad Request`: `{"message": "Title and duration are required."}`
--   `401 Unauthorized`: `{"message": "Not authorized"}`
+- `400 Bad Request`: `{ "message": "Title and duration are required." }`
+- `401 Unauthorized`: `{ "message": "Not authorized" }`
 
-#### `GET /api/challenges`
-**Description**: Retrieves a list of all challenges.
-**Request**: No body.
+#### GET /api/challenges
+Retrieves all challenges.
+**Request**:
+None
 **Response**:
 ```json
 [
   {
-    "_id": "60d0fe4f3b7b2b0015b8d2c1",
+    "_id": "60d0fe4f7e5f3c0015b0b1c1",
     "title": "30 Days of Code",
-    "description": "Commit to coding daily for 30 days.",
+    "description": "Challenge to code every day for 30 days.",
     "duration": 30,
+    "startDate": "2023-10-26T00:00:00.000Z",
     "creator": {
-      "_id": "60d0fe4f3b7b2b0015b8d2c0",
-      "username": "jane.doe"
+      "_id": "60d0fe4f7e5f3c0015b0b1c0",
+      "username": "jane_doe"
     },
-    "participants": ["60d0fe4f3b7b2b0015b8d2c0"],
-    "tags": ["coding", "productivity", "challenge"],
-    "createdAt": "2023-10-26T10:00:00.000Z"
+    "participants": ["60d0fe4f7e5f3c0015b0b1c0"],
+    "tags": ["coding", "daily", "consistency"],
+    "createdAt": "2023-10-26T10:00:00.000Z",
+    "updatedAt": "2023-10-26T10:00:00.000Z"
   }
 ]
 ```
+**Errors**: None expected for successful request.
 
-#### `GET /api/challenges/:id`
-**Description**: Retrieves a single challenge by its ID.
-**Request**: No body.
+#### GET /api/challenges/:id
+Retrieves a single challenge by its ID.
+**Request**:
+None
 **Response**:
 ```json
 {
-  "_id": "60d0fe4f3b7b2b0015b8d2c1",
+  "_id": "60d0fe4f7e5f3c0015b0b1c1",
   "title": "30 Days of Code",
-  "description": "Commit to coding daily for 30 days.",
+  "description": "Challenge to code every day for 30 days.",
   "duration": 30,
-  "startDate": "2023-10-26T10:00:00.000Z",
+  "startDate": "2023-10-26T00:00:00.000Z",
   "creator": {
-    "_id": "60d0fe4f3b7b2b0015b8d2c0",
-    "username": "jane.doe"
+    "_id": "60d0fe4f7e5f3c0015b0b1c0",
+    "username": "jane_doe"
   },
-  "participants": ["60d0fe4f3b7b2b0015b8d2c0"],
-  "tags": ["coding", "productivity", "challenge"],
+  "participants": ["60d0fe4f7e5f3c0015b0b1c0"],
+  "tags": ["coding", "daily", "consistency"],
   "createdAt": "2023-10-26T10:00:00.000Z",
   "updatedAt": "2023-10-26T10:00:00.000Z"
 }
 ```
 **Errors**:
--   `404 Not Found`: `{"message": "Challenge not found"}`
+- `404 Not Found`: `{ "message": "Challenge not found" }`
 
-#### `POST /api/challenges/:id/join`
-**Description**: Allows an authenticated user to join a specific challenge.
-**Authorization**: Bearer Token required.
-**Request**: No body.
+#### POST /api/challenges/:id/join
+Allows an authenticated user to join a specific challenge. (Protected route)
+**Request**:
+Requires a valid JWT in the `Authorization` header.
 **Response**:
 ```json
 {
@@ -232,262 +204,373 @@ The base URL for all API endpoints is `http://localhost:5000/api` (or your confi
 }
 ```
 **Errors**:
--   `404 Not Found`: `{"message": "Challenge not found"}`
--   `400 Bad Request`: `{"message": "Already joined this challenge"}`
--   `401 Unauthorized`: `{"message": "Not authorized"}`
+- `404 Not Found`: `{ "message": "Challenge not found" }`
+- `400 Bad Request`: `{ "message": "Already joined this challenge" }`
+- `401 Unauthorized`: `{ "message": "Not authorized" }`
 
-#### `POST /api/checkins`
-**Description**: Creates a new daily check-in for an authenticated user.
-**Authorization**: Bearer Token required.
+#### POST /api/checkins
+Creates a daily check-in for an authenticated user. (Protected route)
 **Request**:
+Requires a valid JWT in the `Authorization` header.
 ```json
 {
-  "challenge": "60d0fe4f3b7b2b0015b8d2c1",
-  "content": "Completed 2 hours of coding today, feeling productive!",
+  "challenge": "60d0fe4f7e5f3c0015b0b1c1",
+  "content": "Completed day 5 of the coding challenge. Focused on API design.",
   "mood": "😊",
-  "project": "60d0fe4f3b7b2b0015b8d2c5",
-  "images": ["http://example.com/screenshot1.png"]
+  "project": "60d0fe4f7e5f3c0015b0b1c5",
+  "images": ["http://example.com/checkin_img1.png"]
 }
 ```
 **Response**:
 ```json
 {
-  "_id": "60d0fe4f3b7b2b0015b8d2c3",
-  "user": "60d0fe4f3b7b2b0015b8d2c0",
-  "challenge": "60d0fe4f3b7b2b0015b8d2c1",
-  "project": "60d0fe4f3b7b2b0015b8d2c5",
-  "content": "Completed 2 hours of coding today, feeling productive!",
+  "_id": "60d0fe4f7e5f3c0015b0b1c2",
+  "user": "60d0fe4f7e5f3c0015b0b1c0",
+  "challenge": "60d0fe4f7e5f3c0015b0b1c1",
+  "project": "60d0fe4f7e5f3c0015b0b1c5",
+  "content": "Completed day 5 of the coding challenge. Focused on API design.",
   "mood": "😊",
-  "images": ["http://example.com/screenshot1.png"],
-  "date": "2023-10-27T10:00:00.000Z",
-  "createdAt": "2023-10-27T10:00:00.000Z",
-  "updatedAt": "2023-10-27T10:00:00.000Z"
+  "images": ["http://example.com/checkin_img1.png"],
+  "date": "2023-10-26T10:30:00.000Z",
+  "createdAt": "2023-10-26T10:30:00.000Z",
+  "updatedAt": "2023-10-26T10:30:00.000Z"
 }
 ```
 **Errors**:
--   `400 Bad Request`: `{"message": "Already checked in today"}`
--   `401 Unauthorized`: `{"message": "Not authorized"}`
+- `400 Bad Request`: `{ "message": "Already checked in today" }`
+- `401 Unauthorized`: `{ "message": "Not authorized" }`
 
-#### `GET /api/checkins/me`
-**Description**: Retrieves all check-ins made by the authenticated user.
-**Authorization**: Bearer Token required.
-**Request**: No body.
+#### GET /api/checkins/me
+Retrieves all check-ins for the authenticated user. (Protected route)
+**Request**:
+Requires a valid JWT in the `Authorization` header.
 **Response**:
 ```json
 [
   {
-    "_id": "60d0fe4f3b7b2b0015b8d2c3",
-    "user": "60d0fe4f3b7b2b0015b8d2c0",
+    "_id": "60d0fe4f7e5f3c0015b0b1c2",
+    "user": "60d0fe4f7e5f3c0015b0b1c0",
     "challenge": {
-      "_id": "60d0fe4f3b7b2b0015b8d2c1",
+      "_id": "60d0fe4f7e5f3c0015b0b1c1",
       "title": "30 Days of Code"
     },
-    "content": "Completed 2 hours of coding today, feeling productive!",
+    "project": "60d0fe4f7e5f3c0015b0b1c5",
+    "content": "Completed day 5 of the coding challenge. Focused on API design.",
     "mood": "😊",
-    "createdAt": "2023-10-27T10:00:00.000Z"
+    "images": ["http://example.com/checkin_img1.png"],
+    "date": "2023-10-26T10:30:00.000Z",
+    "createdAt": "2023-10-26T10:30:00.000Z",
+    "updatedAt": "2023-10-26T10:30:00.000Z"
   }
 ]
 ```
 **Errors**:
--   `401 Unauthorized`: `{"message": "Not authorized"}`
+- `401 Unauthorized`: `{ "message": "Not authorized" }`
 
-#### `GET /api/checkins/challenge/:challengeId`
-**Description**: Retrieves all check-ins for a specific challenge.
-**Authorization**: Bearer Token required.
-**Request**: No body.
+#### GET /api/checkins/challenge/:challengeId
+Retrieves all check-ins for a specific challenge. (Protected route)
+**Request**:
+Requires a valid JWT in the `Authorization` header.
 **Response**:
 ```json
 [
   {
-    "_id": "60d0fe4f3b7b2b0015b8d2c3",
+    "_id": "60d0fe4f7e5f3c0015b0b1c2",
     "user": {
-      "_id": "60d0fe4f3b7b2b0015b8d2c0",
-      "username": "jane.doe"
+      "_id": "60d0fe4f7e5f3c0015b0b1c0",
+      "username": "jane_doe"
     },
-    "challenge": "60d0fe4f3b7b2b0015b8d2c1",
-    "content": "Completed 2 hours of coding today, feeling productive!",
+    "challenge": "60d0fe4f7e5f3c0015b0b1c1",
+    "project": "60d0fe4f7e5f3c0015b0b1c5",
+    "content": "Completed day 5 of the coding challenge. Focused on API design.",
     "mood": "😊",
-    "createdAt": "2023-10-27T10:00:00.000Z"
+    "images": ["http://example.com/checkin_img1.png"],
+    "date": "2023-10-26T10:30:00.000Z",
+    "createdAt": "2023-10-26T10:30:00.000Z",
+    "updatedAt": "2023-10-26T10:30:00.000Z"
   }
 ]
 ```
 **Errors**:
--   `401 Unauthorized`: `{"message": "Not authorized"}`
+- `401 Unauthorized`: `{ "message": "Not authorized" }`
 
-#### `POST /api/projects`
-**Description**: Creates a new project.
-**Authorization**: Bearer Token required.
+#### POST /api/projects
+Creates a new project. (Protected route)
 **Request**:
+Requires a valid JWT in the `Authorization` header.
 ```json
 {
-  "title": "My Portfolio Website",
-  "description": "Building a personal portfolio to showcase my work.",
-  "challenge": "60d0fe4f3b7b2b0015b8d2c1",
+  "title": "Portfolio Website",
+  "description": "Personal website to showcase projects and skills.",
+  "challenge": "60d0fe4f7e5f3c0015b0b1c1",
   "techStack": ["React", "Node.js", "MongoDB"],
-  "repoLink": "https://github.com/jane_doe/my-portfolio",
-  "screenshots": ["http://example.com/screenshot_portfolio1.png"]
+  "repoLink": "https://github.com/jane_doe/portfolio-website",
+  "screenshots": ["http://example.com/portfolio_ss1.png"]
 }
 ```
 **Response**:
 ```json
 {
-  "_id": "60d0fe4f3b7b2b0015b8d2c5",
-  "title": "My Portfolio Website",
-  "description": "Building a personal portfolio to showcase my work.",
-  "owner": "60d0fe4f3b7b2b0015b8d2c0",
-  "challenge": "60d0fe4f3b7b2b0015b8d2c1",
+  "_id": "60d0fe4f7e5f3c0015b0b1c5",
+  "title": "Portfolio Website",
+  "description": "Personal website to showcase projects and skills.",
+  "owner": "60d0fe4f7e5f3c0015b0b1c0",
+  "challenge": "60d0fe4f7e5f3c0015b0b1c1",
   "techStack": ["React", "Node.js", "MongoDB"],
-  "repoLink": "https://github.com/jane_doe/my-portfolio",
-  "screenshots": ["http://example.com/screenshot_portfolio1.png"],
-  "createdAt": "2023-10-27T11:00:00.000Z",
-  "updatedAt": "2023-10-27T11:00:00.000Z"
+  "repoLink": "https://github.com/jane_doe/portfolio-website",
+  "screenshots": ["http://example.com/portfolio_ss1.png"],
+  "createdAt": "2023-10-26T11:00:00.000Z",
+  "updatedAt": "2023-10-26T11:00:00.000Z"
 }
 ```
 **Errors**:
--   `400 Bad Request`: `{"message": "Title and challenge are required."}`
--   `401 Unauthorized`: `{"message": "Not authorized"}`
+- `400 Bad Request`: `{ "message": "Title and challenge are required." }`
+- `401 Unauthorized`: `{ "message": "Not authorized" }`
 
-#### `GET /api/projects`
-**Description**: Retrieves a list of all projects.
-**Request**: No body.
+#### GET /api/projects
+Retrieves all projects.
+**Request**:
+None
 **Response**:
 ```json
 [
   {
-    "_id": "60d0fe4f3b7b2b0015b8d2c5",
-    "title": "My Portfolio Website",
-    "description": "Building a personal portfolio to showcase my work.",
+    "_id": "60d0fe4f7e5f3c0015b0b1c5",
+    "title": "Portfolio Website",
+    "description": "Personal website to showcase projects and skills.",
     "owner": {
-      "_id": "60d0fe4f3b7b2b0015b8d2c0",
-      "username": "jane.doe"
+      "_id": "60d0fe4f7e5f3c0015b0b1c0",
+      "username": "jane_doe"
     },
     "challenge": {
-      "_id": "60d0fe4f3b7b2b0015b8d2c1",
+      "_id": "60d0fe4f7e5f3c0015b0b1c1",
       "title": "30 Days of Code"
     },
     "techStack": ["React", "Node.js", "MongoDB"],
-    "repoLink": "https://github.com/jane_doe/my-portfolio",
-    "screenshots": ["http://example.com/screenshot_portfolio1.png"]
+    "repoLink": "https://github.com/jane_doe/portfolio-website",
+    "screenshots": ["http://example.com/portfolio_ss1.png"],
+    "createdAt": "2023-10-26T11:00:00.000Z",
+    "updatedAt": "2023-10-26T11:00:00.000Z"
   }
 ]
 ```
+**Errors**: None expected for successful request.
 
-#### `GET /api/projects/me`
-**Description**: Retrieves all projects owned by the authenticated user.
-**Authorization**: Bearer Token required.
-**Request**: No body.
+#### GET /api/projects/me
+Retrieves all projects owned by the authenticated user. (Protected route)
+**Request**:
+Requires a valid JWT in the `Authorization` header.
 **Response**:
 ```json
 [
   {
-    "_id": "60d0fe4f3b7b2b0015b8d2c5",
-    "title": "My Portfolio Website",
-    "description": "Building a personal portfolio to showcase my work.",
-    "owner": "60d0fe4f3b7b2b0015b8d2c0",
+    "_id": "60d0fe4f7e5f3c0015b0b1c5",
+    "title": "Portfolio Website",
+    "description": "Personal website to showcase projects and skills.",
+    "owner": "60d0fe4f7e5f3c0015b0b1c0",
     "challenge": {
-      "_id": "60d0fe4f3b7b2b0015b8d2c1",
+      "_id": "60d0fe4f7e5f3c0015b0b1c1",
       "title": "30 Days of Code"
     },
     "techStack": ["React", "Node.js", "MongoDB"],
-    "repoLink": "https://github.com/jane_doe/my-portfolio"
+    "repoLink": "https://github.com/jane_doe/portfolio-website",
+    "screenshots": ["http://example.com/portfolio_ss1.png"],
+    "createdAt": "2023-10-26T11:00:00.000Z",
+    "updatedAt": "2023-10-26T11:00:00.000Z"
   }
 ]
 ```
 **Errors**:
--   `401 Unauthorized`: `{"message": "Not authorized"}`
+- `401 Unauthorized`: `{ "message": "Not authorized" }`
 
-#### `GET /api/projects/:id`
-**Description**: Retrieves a single project by its ID.
-**Request**: No body.
+#### GET /api/projects/:id
+Retrieves a single project by its ID.
+**Request**:
+None
 **Response**:
 ```json
 {
-  "_id": "60d0fe4f3b7b2b0015b8d2c5",
-  "title": "My Portfolio Website",
-  "description": "Building a personal portfolio to showcase my work.",
+  "_id": "60d0fe4f7e5f3c0015b0b1c5",
+  "title": "Portfolio Website",
+  "description": "Personal website to showcase projects and skills.",
   "owner": {
-    "_id": "60d0fe4f3b7b2b0015b8d2c0",
-    "username": "jane.doe"
+    "_id": "60d0fe4f7e5f3c0015b0b1c0",
+    "username": "jane_doe"
   },
   "challenge": {
-    "_id": "60d0fe4f3b7b2b0015b8d2c1",
+    "_id": "60d0fe4f7e5f3c0015b0b1c1",
     "title": "30 Days of Code"
   },
   "techStack": ["React", "Node.js", "MongoDB"],
-  "repoLink": "https://github.com/jane_doe/my-portfolio",
-  "screenshots": ["http://example.com/screenshot_portfolio1.png"],
-  "createdAt": "2023-10-27T11:00:00.000Z",
-  "updatedAt": "2023-10-27T11:00:00.000Z"
+  "repoLink": "https://github.com/jane_doe/portfolio-website",
+  "screenshots": ["http://example.com/portfolio_ss1.png"],
+  "createdAt": "2023-10-26T11:00:00.000Z",
+  "updatedAt": "2023-10-26T11:00:00.000Z"
 }
 ```
 **Errors**:
--   `404 Not Found`: `{"message": "Project not found"}`
+- `404 Not Found`: `{ "message": "Project not found" }`
 
-#### `PUT /api/projects/:id`
-**Description**: Updates an existing project by its ID. Only the project owner can update it.
-**Authorization**: Bearer Token required.
+#### PUT /api/projects/:id
+Updates an existing project. Only the project owner can update it. (Protected route)
 **Request**:
+Requires a valid JWT in the `Authorization` header.
 ```json
 {
-  "description": "Updated description for my portfolio website.",
-  "techStack": ["React", "TypeScript", "Node.js", "MongoDB"]
+  "description": "Updated description for the portfolio website.",
+  "techStack": ["React", "Node.js", "Express", "MongoDB"]
 }
 ```
 **Response**:
 ```json
 {
-  "_id": "60d0fe4f3b7b2b0015b8d2c5",
-  "title": "My Portfolio Website",
-  "description": "Updated description for my portfolio website.",
-  "owner": "60d0fe4f3b7b2b0015b8d2c0",
-  "challenge": "60d0fe4f3b7b2b0015b8d2c1",
-  "techStack": ["React", "TypeScript", "Node.js", "MongoDB"],
-  "repoLink": "https://github.com/jane_doe/my-portfolio",
-  "screenshots": ["http://example.com/screenshot_portfolio1.png"],
-  "createdAt": "2023-10-27T11:00:00.000Z",
-  "updatedAt": "2023-10-27T11:30:00.000Z"
+  "_id": "60d0fe4f7e5f3c0015b0b1c5",
+  "title": "Portfolio Website",
+  "description": "Updated description for the portfolio website.",
+  "owner": "60d0fe4f7e5f3c0015b0b1c0",
+  "challenge": "60d0fe4f7e5f3c0015b0b1c1",
+  "techStack": ["React", "Node.js", "Express", "MongoDB"],
+  "repoLink": "https://github.com/jane_doe/portfolio-website",
+  "screenshots": ["http://example.com/portfolio_ss1.png"],
+  "createdAt": "2023-10-26T11:00:00.000Z",
+  "updatedAt": "2023-10-26T11:15:00.000Z"
 }
 ```
 **Errors**:
--   `404 Not Found`: `{"message": "Project not found"}`
--   `403 Forbidden`: `{"message": "Not authorized to update this project"}`
--   `401 Unauthorized`: `{"message": "Not authorized"}`
+- `404 Not Found`: `{ "message": "Project not found" }`
+- `403 Forbidden`: `{ "message": "Not authorized to update this project" }`
+- `401 Unauthorized`: `{ "message": "Not authorized" }`
+
+## Usage
+Once the server is running, you can interact with the API using tools like Postman, Insomnia, or `curl`.
+
+1.  **Start the server**:
+    ```bash
+    pnpm dev
+    ```
+    or
+    ```bash
+    pnpm start
+    ```
+    This will typically start the server on `http://localhost:5000`.
+
+2.  **Register a User**:
+    Send a `POST` request to `http://localhost:5000/api/auth/signup` with your desired username, email, and password in the JSON body.
+    ```http
+    POST http://localhost:5000/api/auth/signup
+    Content-Type: application/json
+
+    {
+      "username": "testuser",
+      "email": "test@example.com",
+      "password": "Password123"
+    }
+    ```
+    The response will include a `token`. Copy this token as it's required for authenticated endpoints.
+
+3.  **Log in a User**:
+    Send a `POST` request to `http://localhost:5000/api/auth/login` with your email and password.
+    ```http
+    POST http://localhost:5000/api/auth/login
+    Content-Type: application/json
+
+    {
+      "email": "test@example.com",
+      "password": "Password123"
+    }
+    ```
+    Again, capture the `token` from the response.
+
+4.  **Access Protected Routes (e.g., Get Current User)**:
+    For any protected route, include the JWT in the `Authorization` header.
+    ```http
+    GET http://localhost:5000/api/auth/me
+    Authorization: Bearer YOUR_COPIED_TOKEN
+    ```
+    You should receive your user details. If you forget the `Authorization` header or provide an invalid token, you will get an unauthorized error.
+
+5.  **Create a Challenge**:
+    ```http
+    POST http://localhost:5000/api/challenges
+    Authorization: Bearer YOUR_COPIED_TOKEN
+    Content-Type: application/json
+
+    {
+      "title": "Learn Express.js",
+      "description": "Mastering Express.js fundamentals in 10 days.",
+      "duration": 10
+    }
+    ```
+    The response will contain the details of the newly created challenge, including its ID.
+
+6.  **Create a Project**:
+    Using the challenge ID from the previous step:
+    ```http
+    POST http://localhost:5000/api/projects
+    Authorization: Bearer YOUR_COPIED_TOKEN
+    Content-Type: application/json
+
+    {
+      "title": "Express REST API",
+      "description": "Building a simple RESTful API with Express.",
+      "challenge": "CHALLENGE_ID_FROM_PREVIOUS_STEP",
+      "techStack": ["Express.js", "Node.js", "MongoDB"],
+      "repoLink": "https://github.com/your-username/express-rest-api"
+    }
+    ```
+
+7.  **Make a Daily Check-in**:
+    Using the project and challenge IDs you've created:
+    ```http
+    POST http://localhost:5000/api/checkins
+    Authorization: Bearer YOUR_COPIED_TOKEN
+    Content-Type: application/json
+
+    {
+      "challenge": "CHALLENGE_ID",
+      "project": "PROJECT_ID",
+      "content": "Today I implemented authentication middleware.",
+      "mood": "😃"
+    }
+    ```
+
+Feel free to explore other endpoints using your preferred API client!
 
 ## Technologies Used
-This project leverages a modern JavaScript ecosystem:
-
-| Category        | Technology     | Description                                |
-| :-------------- | :------------- | :----------------------------------------- |
-| **Backend**     | Node.js        | Server-side JavaScript runtime             |
-|                 | Express.js     | Web application framework                  |
-| **Database**    | MongoDB        | NoSQL document database                    |
-|                 | Mongoose       | MongoDB object modeling for Node.js        |
-| **Authentication** | JSON Web Tokens | Secure, compact, URL-safe means of representing claims |
-|                 | Bcrypt.js      | Password hashing library                   |
-| **Utilities**   | Dotenv         | Loads environment variables from a `.env` file |
-|                 | CORS           | Middleware for enabling Cross-Origin Resource Sharing |
-|                 | Morgan         | HTTP request logger middleware             |
-| **Development** | Nodemon        | Monitors for changes and restarts server   |
+| Technology  | Description                                         |
+| :---------- | :-------------------------------------------------- |
+| Node.js     | 🌳 JavaScript runtime environment.                 |
+| Express.js  | ⚡ Fast, unopinionated, minimalist web framework for Node.js. |
+| MongoDB     | 🍃 Flexible NoSQL document database.              |
+| Mongoose    |  ODM for MongoDB, providing schema-based solutions. |
+| JWT         | 🔑 Securely transmit information between parties as a JSON object. |
+| Bcrypt.js   | 🔐 Library for hashing passwords.                  |
+| CORS        | Middleware for enabling Cross-Origin Resource Sharing. |
+| Morgan      | HTTP request logger middleware.                    |
+| dotenv      | Loads environment variables from a `.env` file.    |
+| Nodemon     | 🔄 Utility that monitors for any changes in your source. |
 
 ## Contributing
-Contributions are highly welcome! If you have suggestions for improvements or new features, please follow these steps:
+We welcome contributions to enhance the Productivity Hub API! If you'd like to contribute, please follow these guidelines:
 
-1.  🍴 **Fork the repository**: Click on the 'Fork' button at the top right of this page.
-2.  🌿 **Create a new branch**: `git checkout -b feature/your-feature-name`
-3.  ✨ **Make your changes**: Implement your feature or fix.
-4.  ✍️ **Commit your changes**: `git commit -m 'feat: Add new feature'`
-5.  ⬆️ **Push to your branch**: `git push origin feature/your-feature-name`
-6.  🔄 **Open a Pull Request**: Explain your changes and why they are beneficial.
+*   ✨ **Fork the repository**: Start by forking the project to your GitHub account.
+*   🌿 **Create a new branch**: For each feature or bug fix, create a new branch from `main` (e.g., `feature/add-new-endpoint` or `fix/auth-bug`).
+*   💻 **Make your changes**: Implement your features or fixes, ensuring code quality and adherence to existing patterns.
+*   ✅ **Test your changes**: Write or update tests to cover your modifications.
+*   💬 **Commit messages**: Write clear and descriptive commit messages following conventional commits.
+*   ⬆️ **Push your branch**: Push your changes to your forked repository.
+*   ✉️ **Open a Pull Request**: Submit a pull request to the `main` branch of the original repository, describing your changes in detail.
 
 ## License
-This project is licensed under the ISC License.
+This project is not currently covered by an explicit open-source license. Please contact the author for licensing information.
 
+## Author Info
+**Feranmi**
+
+*   LinkedIn: [Your LinkedIn Profile](https://linkedin.com/in/yourusername)
+*   Twitter: [Your Twitter Profile](https://twitter.com/yourusername)
+*   Portfolio: [Your Portfolio Website](https://yourportfolio.com)
 
 ---
-[![Readme was generated by Dokugen](https://img.shields.io/badge/Readme%20was%20generated%20by-Dokugen-brightgreen)](https://www.npmjs.com/package/dokugen)#   P r o d u c t i v i t y - a p p - b a c k e n d  
- #   P r o d u c t i v i t y - a p p - b a c k e n d  
- #   P r o d u c t i v i t y - a p p - b a c k e n d  
- #   P r o d u c t i v i t y - a p p - b a c k e n d  
- #   P r o d u c t i v i t y - a p p - b a c k e n d  
- #   P r o d u c t i v i t y - a p p - b a c k e n d  
- 
+
+[![Readme was generated by Dokugen](https://img.shields.io/badge/Readme%20was%20generated%20by-Dokugen-brightgreen)](https://www.npmjs.com/package/dokugen)
